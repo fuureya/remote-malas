@@ -121,14 +121,50 @@ Kirim pesan seperti biasa. Agen akan merespons dengan konteks percakapan yang te
 
 ### 2. Perintah Slash yang Tersedia
 
-| Perintah | Fungsi / Deskripsi | Contoh Penggunaan |
-| :--- | :--- | :--- |
-| `/new` | Bersihkan sesi percakapan saat ini dan mulai percakapan baru tanpa konteks sebelumnya. | `/new` |
-| `/dir` | Pindah atau buat direktori kerja baru (harus dalam lingkup `ALLOWED_DIRS`). | `/dir my-project` atau `/dir /home/user/projects/web` |
-| `/goal` | Menjalankan perintah kompleks yang memakan waktu lama di latar belakang tanpa terputus. | `/goal Refactor seluruh kode pada folder src untuk mengikuti prinsip SOLID` |
-| `/grill_me` | Bot akan mewawancarai Anda terlebih dahulu untuk memperjelas kebutuhan sebelum mulai bekerja. | `/grill_me Desain arsitektur database e-commerce` |
-| `/browser` | Memaksa agen untuk membuka browser dan mengambil informasi dari web. | `/browser Cari dokumentasi terbaru tentang Fiber v2` |
-| `/schedule` | Menjadwalkan pengingat atau tugas berkala. | `/schedule in 10m ingatkan saya untuk cek server` |
+#### 📊 Tabel Ringkasan Perintah
+
+| Perintah | Parameter | Deskripsi Singkat | Contoh |
+| :--- | :--- | :--- | :--- |
+| `/new` | Tidak ada | Mereset sesi percakapan (mulai dari awal) | `/new` |
+| `/dir` | `<path>` | Mengubah/membuat direktori kerja (Sandbox) | `/dir /path/to/project` |
+| `/goal` | `<tugas>` | Menjalankan tugas kompleks secara *background* | `/goal Refactor seluruh kode di src/` |
+| `/grill_me` | `<topik>` | Agen bertanya balik untuk memperjelas kebutuhan | `/grill_me Buat arsitektur DB e-commerce` |
+| `/browser` | `<kueri>` | Memaksa agen menggunakan browser internet | `/browser Cari dokumentasi Fiber v2` |
+| `/schedule` | `<waktu> <tugas>` | Menjadwalkan pengingat atau tugas otomatis | `/schedule in 10m ingatkan cek server` |
+
+#### 📝 Penjelasan Detail Setiap Perintah
+
+- **`/new`**
+  - **Fungsi**: Membersihkan konteks percakapan saat ini (`Continue = false`).
+  - **Kapan Digunakan**: Gunakan saat Anda ingin beralih ke topik/tugas baru tanpa terpengaruh oleh riwayat percakapan sebelumnya.
+  - **Contoh**: Kirim `/new` di chat Telegram.
+
+- **`/dir <path>`**
+  - **Fungsi**: Menampilkan, mengubah, atau membuat direktori kerja baru tempat `agy` mengeksekusi file dan perintah.
+  - **Batasan**: Hanya mengizinkan folder yang berada di dalam `ALLOWED_DIRS` (mencegah *path traversal*).
+  - **Contoh**:
+    - Relatif: `/dir my-project` (membuat/berpindah ke folder `my-project` di dalam direktori kerja aktif).
+    - Absolut: `/dir /var/www/html/app` (berpindah ke direktori absolut jika diizinkan di `.env`).
+
+- **`/goal <deskripsi tugas>`**
+  - **Fungsi**: Menginstruksikan agen untuk bekerja secara tuntas pada tugas berdurasi panjang (*long-running goal*) di latar belakang (*background goroutine*).
+  - **Kapan Digunakan**: Cocok untuk tugas besar seperti refactoring kode, pembuatan fitur lengkap, atau audit proyek.
+  - **Contoh**: `/goal Buat sistem otentikasi JWT lengkap dengan middleware dan unit test`
+
+- **`/grill_me <topik/permintaan>`**
+  - **Fungsi**: Bot akan mewawancarai Anda terlebih dahulu dengan pertanyaan-pertanyaan spesifik sebelum mulai mengeksekusi tugas.
+  - **Kapan Digunakan**: Saat Anda memiliki ide tetapi belum yakin dengan detail implementasi atau arsitekturnya.
+  - **Contoh**: `/grill_me Saya ingin membuat API sistem pembayaran online`
+
+- **`/browser <kueri/url>`**
+  - **Fungsi**: Memaksa agen AI untuk mengaktifkan modul peramban web (*web browsing*) guna mencari informasi terkini dari internet.
+  - **Kapan Digunakan**: Untuk riset pustaka baru, mengecek dokumentasi API online, atau mencari solusi error terbaru.
+  - **Contoh**: `/browser Cari cara penggunaan pustaka Fiber v3 di Golang`
+
+- **`/schedule <waktu> <instruksi>`**
+  - **Fungsi**: Mengatur jadwal atau pengingat untuk menjalankan instruksi tertentu pada waktu yang ditentukan.
+  - **Kapan Digunakan**: Untuk pengingat otomatis, pengecekan berkala, atau tugas terjadwal.
+  - **Contoh**: `/schedule in 15m jalankan go test dan laporkan hasilnya`
 
 ---
 
