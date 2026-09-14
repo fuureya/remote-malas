@@ -390,7 +390,7 @@ func executeAgy(bot *TelegramBot, userID int64, chatID int64, content string, is
 	}
 
 	// Menambahkan instruksi prompt sistem tersembunyi di akhir prompt
-	sysPrompt := "\n\n(Lưu ý từ hệ thống: Tuyệt đối không sử dụng định dạng bảng (table). Hãy trình bày dưới dạng danh sách (bullet list) có in đậm/in nghiêng để dễ đọc trên điện thoại. Hãy giữ nội dung ngắn gọn và súc tích nhất có thể. QUAN TRỌNG: Bạn BẮT BUỘC phải bọc toàn bộ nội dung câu trả lời cuối cùng dành cho người dùng vào giữa cặp thẻ <BOT_REPLY> và </BOT_REPLY>. Bất kỳ suy nghĩ hoặc phần log nào của bạn phải nằm ngoài thẻ này để hệ thống có thể lọc bỏ.)"
+	sysPrompt := "\n\n(Catatan sistem: Dilarang menggunakan format tabel (table). Harap sajikan jawaban dalam bentuk daftar poin (bullet list) dengan cetak tebal/miring agar mudah dibaca di ponsel. Buat jawaban sesingkat dan sejelas mungkin. SANGAT PENTING: Anda WAJIB membungkus seluruh jawaban akhir untuk pengguna di dalam pasangan tag <BOT_REPLY> dan </BOT_REPLY>. Setiap pemikiran atau log internal Anda harus berada di luar tag ini agar sistem dapat menyaringnya.)"
 	args = append(args, "-p", content+sysPrompt)
 
 	log.Printf("Mengeksekusi untuk User %d di %s: %s", userID, state.WorkingDir, cmdPath)
