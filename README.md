@@ -125,6 +125,7 @@ Kirim pesan seperti biasa. Agen akan merespons dengan konteks percakapan yang te
 
 | Perintah | Parameter | Deskripsi Singkat | Contoh |
 | :--- | :--- | :--- | :--- |
+| `/info` | Tidak ada | Menampilkan panduan lengkap & daftar perintah | `/info` |
 | `/new` | Tidak ada | Mereset sesi percakapan (mulai dari awal) | `/new` |
 | `/dir` | `<path>` | Mengubah/membuat direktori kerja (Sandbox) | `/dir /path/to/project` |
 | `/goal` | `<tugas>` | Menjalankan tugas kompleks secara *background* | `/goal Refactor seluruh kode di src/` |
@@ -133,6 +134,11 @@ Kirim pesan seperti biasa. Agen akan merespons dengan konteks percakapan yang te
 | `/schedule` | `<waktu> <tugas>` | Menjadwalkan pengingat atau tugas otomatis | `/schedule in 10m ingatkan cek server` |
 
 #### 📝 Penjelasan Detail Setiap Perintah
+
+- **`/info` atau `/help`**
+  - **Fungsi**: Menampilkan pesan panduan interaktif berisi daftar seluruh perintah dan contoh penggunaannya langsung di Telegram.
+  - **Kapan Digunakan**: Gunakan kapan saja jika Anda lupa sintaks atau opsi perintah yang tersedia.
+  - **Contoh**: Kirim `/info` atau `/help` di chat Telegram.
 
 - **`/new`**
   - **Fungsi**: Membersihkan konteks percakapan saat ini (`Continue = false`).

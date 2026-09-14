@@ -106,6 +106,7 @@ func main() {
 
 	// Mengatur menu perintah (commands) pada bot Telegram
 	commands := []map[string]string{
+		{"command": "info", "description": "Lihat panduan lengkap dan daftar perintah bot"},
 		{"command": "new", "description": "Memulai percakapan baru dengan Antigravity (membersihkan sesi saat ini)"},
 		{"command": "dir", "description": "Mengubah direktori kerja (Sandbox) - Contoh: /dir /path/to/dir"},
 		{"command": "goal", "description": "Menjalankan tugas secara tuntas tanpa terputus (di latar belakang)"},
@@ -240,6 +241,43 @@ func handleMessage(bot *TelegramBot, m *Message) {
 		state := getSession(m.From.ID)
 
 		switch cmd {
+		case "/info", "/help":
+			infoMsg := `ℹ️ <b>PANDUAN LENGKAP PERINTAH BOT</b>
+
+Berikut adalah daftar perintah yang dapat Anda gunakan:
+
+🔄 <b>/new</b>
+• <b>Fungsi:</b> Membersihkan konteks percakapan & mulai dari awal.
+• <b>Kapan Digunakan:</b> Saat ingin beralih ke topik/tugas baru tanpa terpengaruh riwayat lama.
+• <b>Contoh:</b> <code>/new</code>
+
+📂 <b>/dir &lt;path&gt;</b>
+• <b>Fungsi:</b> Menampilkan, mengubah, atau membuat direktori kerja baru (Sandbox).
+• <b>Batasan:</b> Hanya lokasi di dalam <code>ALLOWED_DIRS</code> yang diizinkan.
+• <b>Contoh:</b> <code>/dir my-project</code> atau <code>/dir /path/to/dir</code>
+
+🎯 <b>/goal &lt;tugas&gt;</b>
+• <b>Fungsi:</b> Menjalankan tugas kompleks/panjang di latar belakang tanpa terputus.
+• <b>Kapan Digunakan:</b> Cocok untuk refactoring kode, pembuatan fitur besar, atau audit.
+• <b>Contoh:</b> <code>/goal Refactor seluruh kode di folder src/</code>
+
+💬 <b>/grill_me &lt;topik&gt;</b>
+• <b>Fungsi:</b> Bot akan mewawancarai Anda terlebih dahulu untuk memperjelas kebutuhan.
+• <b>Kapan Digunakan:</b> Saat punya ide tapi butuh wawancara/diskusi detail sebelum eksekusi.
+• <b>Contoh:</b> <code>/grill_me Desain arsitektur database e-commerce</code>
+
+🌐 <b>/browser &lt;kueri&gt;</b>
+• <b>Fungsi:</b> Memaksa agen AI menjelajah web untuk mencari informasi online.
+• <b>Kapan Digunakan:</b> Untuk riset pustaka baru, dokumen API terbaru, atau solusi error.
+• <b>Contoh:</b> <code>/browser Cari dokumentasi terbaru Fiber v3 Golang</code>
+
+⏰ <b>/schedule &lt;waktu&gt; &lt;tugas&gt;</b>
+• <b>Fungsi:</b> Menjadwalkan pengingat atau tugas otomatis.
+• <b>Kapan Digunakan:</b> Pengingat otomatis atau tugas terjadwal.
+• <b>Contoh:</b> <code>/schedule in 15m jalankan test server</code>`
+			bot.SendMessage(m.Chat.ID, infoMsg, "HTML")
+			return
+
 		case "/goal", "/grill_me", "/browser":
 			if args == "" {
 				bot.SendMessage(m.Chat.ID, "❌ Anda perlu memberikan argumen/deskripsi untuk perintah ini.")
